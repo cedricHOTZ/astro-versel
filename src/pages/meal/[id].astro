@@ -1,0 +1,61 @@
+---
+import { db } from "astro:db";
+import Layout from "../../layouts/Layout.astro";
+import { Meal } from "astro:db";
+import { eq } from "astro:db";
+import Button from "../../components/common/Button.astro";
+
+// export async function getStaticPaths() {
+//   return meals.map((meal) => {
+//     return {
+//       params: { id: meal.id },
+//       props: meal,
+//     };
+//   });
+// }
+
+const mealId = Astro.params.id;
+
+if (Astro.request.method === "POST") {
+  // Supprimer le repas directement sans utiliser authorId
+  await db.delete(Meal).where(eq(Meal.id, +mealId!));
+  return Astro.redirect("/");
+}
+
+// Récupérer le repas directement depuis la table Meal
+const result = await db.select().from(Meal).where(eq(Meal.id, +mealId!));
+console.log("Result:", result);
+
+if (!result || result.length === 0) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+}
+
+// Extraire les détails du repas, y compris le nom de l'auteur
+const meal = result[0]; // Accéder au premier élément du tableau
+const { title, description, image, imageAlt, authorName } = meal;
+
+// Assurez-vous que `authorName` est récupéré directement depuis Meal
+---
+
+<Layout title="Datail du plat">
+  <h1>{title}</h1>
+  <img src={image} alt={imageAlt} />
+  <p class="paragraph">{description}</p>
+  <p class="paragraphe">
+    Auteur:{authorName}
+  </p>
+  <form method="POST">
+    <Button type="submit">Supprimer</Button>
+  </form>
+</Layout>
+
+<style>
+  img {
+    max-width: 320px;
+    object-fit: cover;
+    border-radius: 1.8rem;
+  }
+</style>

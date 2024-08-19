@@ -1,0 +1,50 @@
+<div class="hero-card">
+  <div class="hero-card__container">
+    <h1>Découvrez les Meilleurs Plats du Monde</h1>
+    <p class="hero-card__text">
+       Préparez-vous à un voyage culinaire exceptionnel !
+    </p>
+  </div>
+</div>
+
+<style>
+  .hero-card {
+    width: 100%;
+    height: 30rem;
+    border-radius: 2rem;
+    background-image: url("/images/burger.webp");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-card__container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 2rem;
+    padding: 4rem;
+    text-shadow: rgb(210, 201, 163) 1px 0 10px;
+  }
+
+  h1 {
+    color: white;
+    text-align: center;
+  }
+
+  .hero-card__text {
+    width: 100%;
+    color: white;
+    font-size: 1.3rem;
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .hero-card__text {
+      font-size: 1.1rem;
+    }
+  }
+</style>

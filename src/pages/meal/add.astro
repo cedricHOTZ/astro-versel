@@ -1,0 +1,82 @@
+---
+import { db } from "astro:db";
+import Button from "../../components/common/Button.astro";
+import Layout from "../../layouts/Layout.astro";
+import { Meal } from "astro:db";
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const title = formData.get("title") as string;
+  const description = formData.get("description") as string;
+  const image = formData.get("image") as File;
+  const imageAlt = formData.get("imageAlt") as string;
+  const authorName = formData.get("authorName") as string;
+  const arrayBuffer = await image.arrayBuffer();
+  const imageBase64 = Buffer.from(arrayBuffer).toString("base64");
+
+  await db.insert(Meal).values({
+    title: title,
+    description: description,
+    published: new Date(),
+    image: `data:image/webp;base64,${imageBase64}`,
+    imageAlt: imageAlt,
+    authorName: authorName, // Assurez-vous que 'authorName' est un champ valide dans 'Meal'
+  });
+
+  return Astro.redirect("/");
+}
+---
+
+<Layout title="Proposer un plat">
+  <h1>Proposer un plat</h1>
+  <form method="post" enctype="multipart/form-data">
+    <div class="form-control">
+      <label for="authorName">Nom de l'auteur</label>
+      <input
+        type="text"
+        name="authorName"
+        id="authorName"
+        placeholder="Ex: John Doe"
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="title">Titre</label>
+      <input type="text" name="title" id="title" placeholder="Ex: Tacos" />
+    </div>
+    <div class="form-control">
+      <label for="description">Description</label>
+      <textarea
+        name="description"
+        id="description"
+        placeholder="Ex: Découvrez notre taco croustillant"></textarea>
+    </div>
+    <div class="form-control">
+      <label for="image">Image</label>
+      <input type="file" name="image" id="image" />
+    </div>
+    <div class="form-control">
+      <label for="imageAlt">Description de l'image</label>
+      <input
+        type="text"
+        name="imageAlt"
+        id="imageAlt"
+        placeholder="Ex: Une image de tacos"
+      />
+    </div>
+    <section class="action">
+      <Button type="submit">Ajouter</Button>
+    </section>
+  </form>
+</Layout>
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .action {
+    margin-top: 2rem;
+  }
+</style>

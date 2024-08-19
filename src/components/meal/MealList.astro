@@ -1,0 +1,31 @@
+---
+import type { Meal } from "../../models/meal";
+import MealCard from "./MealCard.astro";
+
+interface Props {
+  meals: Meal[];
+}
+
+const { meals } = Astro.props;
+---
+
+<ul class="meal-list">
+  {meals.map((meal) => <MealCard meal={meal} />)}
+</ul>
+
+<style>
+  .meal-list {
+    list-style: "none";
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.3rem;
+  }
+
+  @media only screen and (max-width: 640px) {
+    .meal-list {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+</style>
