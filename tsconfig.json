@@ -1,3 +1,8 @@
+
 {
-  "extends": "astro/tsconfigs/strict"
+"extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "noUnusedLocals": false, // Désactiver les avertissements pour les variables non utilisées
+    "noUnusedParameters": false
+  }
 }

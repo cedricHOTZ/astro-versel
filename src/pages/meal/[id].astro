@@ -24,7 +24,6 @@ if (Astro.request.method === "POST") {
 
 // Récupérer le repas directement depuis la table Meal
 const result = await db.select().from(Meal).where(eq(Meal.id, +mealId!));
-console.log("Result:", result);
 
 if (!result || result.length === 0) {
   return new Response(null, {

@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+    # ... autres configurations ...
+
+    PassengerRuby /usr/bin/ruby
+    PassengerAppRoot /home/hoce6677/sous-domaine/astro_e-commerce
+    PassengerLogFile /home/hoce6677/sous-domaine/astro_e-commerce/log/passenger.log
+
+    # ... autres configurations ...
+</VirtualHost>
