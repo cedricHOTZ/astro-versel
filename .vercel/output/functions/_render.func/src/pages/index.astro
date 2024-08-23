@@ -1,0 +1,20 @@
+---
+import Hero from "../components/common/Hero.astro";
+import Layout from "../layouts/Layout.astro";
+
+import MeaLList from "../components/meal/MealList.astro";
+import { db } from "astro:db";
+import { Meal } from "astro:db";
+
+
+const meals = await db.select().from(Meal);
+---
+
+<Layout title="Liste des plats">
+  <Hero />
+  <h2>Liste des plats</h2>
+  <p class="paragraph">
+    Retrouvez la liste de nos délicieux plats proposés par la communauté.
+  </p>
+  <MeaLList meals={meals} />
+</Layout>
