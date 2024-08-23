@@ -13,5 +13,5 @@ output: 'server',
   adapter: node({
     mode: 'standalone', // Spécifiez le mode ici
   }),
-  integrations: [db()]
+  
 });
